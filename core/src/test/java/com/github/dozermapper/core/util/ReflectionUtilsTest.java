@@ -203,6 +203,13 @@ public class ReflectionUtilsTest extends AbstractDozerTest {
         assertNotNull(propertyDescriptor.getReadMethod());
     }
 
+    @Test
+    public void shouldDetermineReadMethodForSyntheticBooleanMethod() throws Exception {
+        PropertyDescriptor propertyDescriptor = ReflectionUtils.findPropertyDescriptor(
+                SyntheticBooleanChild.class, "first", null);
+        assertNotNull(propertyDescriptor.getReadMethod());
+    }
+
     public class Y implements HasX<ClassInheritsClassX> {
         private ClassInheritsClassX x;
 
@@ -289,4 +296,12 @@ public class ReflectionUtilsTest extends AbstractDozerTest {
 
     }
 
+    class SyntheticBooleanParent {
+        public boolean isFirst() {
+            return true;
+        }
+    }
+
+    public class SyntheticBooleanChild extends SyntheticBooleanParent {
+    }
 }
